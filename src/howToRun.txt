@@ -1,0 +1,22 @@
+cd coding/robotic/Project/finalChalarm/ChalarmFinalBoss_ws
+
+colcon build --symlink-install
+
+source install/setup.bash
+
+ros2 launch articubot_one launch_sim.launch.py
+
+rviz2
+
+python3 src/articubot_one/src/robot_control.py
+
+ros2 run twist_mux twist_mux --ros-args --params-file ./src/articubot_one/config/twist_mux.yaml -r cmd_vel_out:=diff_cont/cmd_vel_unstamped
+
+ros2 launch slam_toolbox online_async_launch.py params_file:=./src/articubot_one/config/mapper_params_online_async.yaml use_sime_time:=true
+
+เรียงตามลำดับ
+
+ถ้าจะเปิด gui ใน rviz2 :
+    ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+- หากใช้ gui rviz2 ไม่เชื่อมกับ gazebo จะเข้าโหมด ปรับค่าเองของ rviz2 ใน config
